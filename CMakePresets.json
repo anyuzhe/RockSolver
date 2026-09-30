@@ -1,0 +1,33 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "native-release",
+      "displayName": "Native Release",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/native-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "ROCKSOLVER_BUILD_TESTS": "ON"
+      }
+    },
+    {
+      "name": "wasm-release",
+      "displayName": "Emscripten Release",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/wasm-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "ROCKSOLVER_BUILD_TESTS": "OFF",
+        "ROCKSOLVER_BUILD_WASM": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {"name": "native-release", "configurePreset": "native-release"},
+    {"name": "wasm-release", "configurePreset": "wasm-release"}
+  ],
+  "testPresets": [
+    {"name": "native-release", "configurePreset": "native-release", "output": {"outputOnFailure": true}}
+  ]
+}

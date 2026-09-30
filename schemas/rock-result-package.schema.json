@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rockinnov.local/schemas/rock-result-package-1.0.json",
+  "title": "RockResult Package Manifest 1.0",
+  "type": "object",
+  "required": [
+    "format",
+    "formatVersion",
+    "mediaType",
+    "createdAt",
+    "counts",
+    "entries"
+  ],
+  "properties": {
+    "format": {
+      "const": "smrm-rockresult"
+    },
+    "formatVersion": {
+      "const": "1.0"
+    },
+    "mediaType": {
+      "const": "application/vnd.smrm.rockresult+zip"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resultSchema": {
+      "type": "string"
+    },
+    "modelSchema": {
+      "type": "string"
+    },
+    "solverVersion": {
+      "type": "string"
+    },
+    "scenario": {
+      "enum": [
+        "slope",
+        "tunnel",
+        ""
+      ]
+    },
+    "material": {
+      "enum": [
+        "elastic",
+        "mohr-coulomb",
+        "smrm",
+        ""
+      ]
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "nodes",
+        "zones",
+        "activeZones"
+      ],
+      "properties": {
+        "nodes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "zones": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "activeZones": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "engineeringContext": {
+      "type": "object"
+    },
+    "postProcessing": {
+      "type": "object"
+    },
+    "entries": {
+      "type": "object",
+      "required": [
+        "model",
+        "result"
+      ],
+      "properties": {
+        "model": {
+          "const": "model.json"
+        },
+        "result": {
+          "const": "result.json"
+        }
+      }
+    }
+  }
+}

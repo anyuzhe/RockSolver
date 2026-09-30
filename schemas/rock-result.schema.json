@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rockinnov.local/schemas/rock-result-1.0.json",
+  "title": "RockResult 1.0",
+  "type": "object",
+  "required": [
+    "version",
+    "solverVersion",
+    "summary",
+    "mesh",
+    "node",
+    "zone",
+    "stages"
+  ],
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "solverVersion": {
+      "type": "string"
+    },
+    "scenario": {
+      "enum": [
+        "slope",
+        "tunnel"
+      ]
+    },
+    "material": {
+      "enum": [
+        "elastic",
+        "mohr-coulomb",
+        "smrm"
+      ]
+    },
+    "summary": {
+      "type": "object"
+    },
+    "mesh": {
+      "type": "object"
+    },
+    "node": {
+      "type": "object"
+    },
+    "zone": {
+      "type": "object"
+    },
+    "stages": {
+      "type": "array"
+    },
+    "postProcessing": {
+      "type": "object"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

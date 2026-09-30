@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rockinnov.local/schemas/rock-model-1.0.json",
+  "title": "RockModel 1.0",
+  "type": "object",
+  "required": [
+    "version",
+    "scenario",
+    "geometry",
+    "mesh",
+    "material",
+    "solver"
+  ],
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "name": {
+      "type": "string"
+    },
+    "scenario": {
+      "enum": [
+        "slope",
+        "tunnel"
+      ]
+    },
+    "geometry": {
+      "type": "object",
+      "required": [
+        "lengthM",
+        "widthM",
+        "heightM"
+      ],
+      "properties": {
+        "lengthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "widthM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "heightM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "slopeAngleDeg": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 89
+        },
+        "tunnelRadiusXM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "tunnelRadiusZM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "mesh": {
+      "type": "object",
+      "required": [
+        "nx",
+        "ny",
+        "nz"
+      ],
+      "properties": {
+        "nx": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        },
+        "ny": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "nz": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "required": [
+        "type",
+        "densityKgM3",
+        "elasticModulusGpa",
+        "poissonRatio"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "elastic",
+            "mohr-coulomb",
+            "smrm"
+          ]
+        },
+        "densityKgM3": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "elasticModulusGpa": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "poissonRatio": {
+          "type": "number",
+          "exclusiveMinimum": -0.5,
+          "exclusiveMaximum": 0.5
+        },
+        "cohesionMpa": {
+          "type": "number",
+          "minimum": 0
+        },
+        "frictionDeg": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 90
+        },
+        "tensileStrengthMpa": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ucsMpa": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "dilationDeg": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 90
+        }
+      }
+    },
+    "jointSets": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object"
+      }
+    },
+    "initialStressMpa": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "number"
+      }
+    },
+    "stages": {
+      "type": "object",
+      "properties": {
+        "excavationSteps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "supportStiffnessMnM": {
+          "type": "number",
+          "minimum": 0
+        },
+        "strengthReductionFactor": {
+          "type": "number",
+          "minimum": 1
+        },
+        "strengthReductionTarget": {
+          "enum": [
+            "all",
+            "continuum",
+            "interfaces"
+          ],
+          "default": "all"
+        }
+      }
+    },
+    "solver": {
+      "type": "object"
+    },
+    "interfaces": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "sourceGroup",
+          "normalStiffnessPaPerM",
+          "shearStiffnessPaPerM",
+          "cohesionMpa",
+          "frictionDeg"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "sourceGroup": {
+            "type": "string",
+            "minLength": 1
+          },
+          "movingSideHint": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "number"
+            }
+          },
+          "normalStiffnessPaPerM": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "shearStiffnessPaPerM": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "cohesionMpa": {
+            "type": "number",
+            "minimum": 0
+          },
+          "frictionDeg": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMaximum": 90
+          },
+          "tensileStrengthMpa": {
+            "type": "number",
+            "minimum": 0
+          },
+          "replaceSourceWithHost": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "monitorPoints": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "position"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "position": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "number"
+            }
+          },
+          "selection": {
+            "enum": [
+              "nearest",
+              "max-displacement"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
